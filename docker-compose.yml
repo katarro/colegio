@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root          # Contraseña del usuario root (puedes cambiarla si lo deseas)
+      MYSQL_DATABASE: bd_colegio         # Nombre de la base de datos
+      MYSQL_USER: root                   # Nombre de usuario
+      MYSQL_PASSWORD: ""                 # Contraseña (en este caso está vacía)
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
